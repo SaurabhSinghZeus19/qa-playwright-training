@@ -1,6 +1,5 @@
-export type UserType = 'standard' | 'locked' | 'problem'; 
- 
-export interface UserCredentials { 
+export type UserType = 'standard' | 'locked' | 'problem';
+export interface UserCredentials {      
   username: string; 
   password: string; 
   type: UserType; 
