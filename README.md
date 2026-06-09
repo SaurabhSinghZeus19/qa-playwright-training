@@ -15,11 +15,12 @@ Application Under Test: https://www.saucedemo.com/
 # PROJECT STRUCTURE
 
 QA-PLAYWRIGHT-TRAINING/
-|----- tests/
-|       |----- login.spec.ts
-|       |----- products.spec.ts
-|       |----- cart.spec.ts
-|       |----- checkout.spec.ts
+|
+|----- pages/
+|       |----- LoginPage.ts
+|       |----- ProductPage.ts
+|       |----- CartPage.ts
+|       |----- CheckoutPage.ts
 |
 |
 |----- test-data/
@@ -27,57 +28,95 @@ QA-PLAYWRIGHT-TRAINING/
 |        |----- products.ts
 |
 |
+|----- tests/
+|       |----- login.spec.ts
+|       |----- products.spec.ts
+|       |----- cart.spec.ts
+|       |----- checkout.spec.ts
+|
+|----- utils/
+|      |----- testHelpers.ts
+|
+|----- Daily-Progress-Log.md
+|----- debugging-note.md
 |----- manual_test_scenarios.xlsx
 |----- debugging-note.md
 |----- playwright.config.ts
 |----- package.json
 |----- README.md
+|----- self-review.md
 
-# DAILY PROGRESS LOG
 
-DAY 1:
-1) Explored saucedemo application manually.
-2) Identified and documented manual test scenarios
-3) set up playwright project using typescript
-4) created typed user test data using typescript interfaces and types
-5) Automated login-related test cases
-6) Generated and reviewed playwright HTML report
+# SETUP INSTRUCTIONS
 
-Day 2:
-1) Created typed product test data
-2) Automated product listing, cart, checkout, and order completion scenarios
-3) Added negative validation test cases
-4) Used stable locators and meaningful assertion
-5) Investigated and fixed automation issues using playwright report
+1) Clone Repository
+   git clone<repository-url>
 
-Day 3:
-to be completed
-
-# INSTALLATION
-
-1) Install project dependencies:
+2) Install Dependencies
    npm install
-2) Install Playwright browsers:
-   npx playwright install
 
-# RUNNING TESTS
+3) Install Playwright Browsers
+   npx playwright install      
+
+# Test Execution
 1) Run all tests:
    npx playwright test
+
 2) Run a specific test file:
    npx playwright test tests/login.spec.ts
+
 3) Run tests in headed mode:
    npx playwright test --headed
+
+4) Run Tests by Tag
+   npx playwright test --grep @smoke
+   npx playwright test --grep @negative   
 
 # VIEW TEST REPORT
 Generate and open the playwright HTML report:
 npx playwright show-report
 
+# Test Data Management
+Test data is maintained seperately from test scripts using Typescript files
+user.ts 
+contains: 1) User credentials 2) User types 3) Checkout information
+
+product.ts
+contains: 1) Product names and price used in test scenarios
+
+this is to reduce use of hardcoded values and improve maintainability
+
 # CURRENT TEST COVERAGE
-1) Login Validation
-2) Product Listing
-3) Product Details
-4) Add to cart
-5) Remove from cart
-6) Cart Validation
-7) Order Completion
-8) Negative Validation Scenarios
+
+LOGIN:-    ![alt text](LoginAutomation.png)
+1) Login page load validation
+2) Valid login
+3) Invalid password validation
+4) Locked user validation
+
+PRODUCTS:- ![alt text](ProductAutomation.png) 
+1) Product list visibility
+2) Product details page navigation
+
+CART:-     ![alt text](CartAutomation.png)
+1) Add product to cart
+2) Remove product from cart
+3) Add multiple products
+4) Cart validation
+
+CHECKOUT:- ![alt text](CheckoutAutomation.png) | ![alt text](CheckoutAutomation2.png)
+1) Valid checkout
+2) Missing first name validation
+3) Missing last name validation
+4) Missing postal code validation
+5) Empty form validation
+6) Successful order completion
+
+
+
+
+
+
+
+
+

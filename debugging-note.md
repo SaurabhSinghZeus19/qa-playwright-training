@@ -1,13 +1,23 @@
-# DEBUGGING NOTE
 
-# Failed Test : Login validation tests(TC_003 and TC_004)
+# DEBUGGING NOTE 
 
-# Reason for Failure: The tests were failing even though the logic looked correct. the error message was showing "Username is required" instead of the expected validation message.
+# Failed Test: 
+Cart and Checkout test cases after Page Object Model refactoring
 
-# How I Investigated: First, i checked the Playwright HTML report and read the failure logs carefully. after reviewing the test code line by line, i noticed that some playwright actions were missing "await" keyword. because of this the fields were not being filled properly before the next step was executed.
+# Reason for Failure: 
+Several cart and checkout test cases were failing with timeout errors(Error: locator.click: Test timeout of 30000ms exceeded). the tests were unable to locate the Add to cart and Remove buttons for products.
 
-# Tool Used: 1) Playwright HTML Report    2) Test failure logs
+# How I Investigated: 
+I reviewed the Playwright error logs and checked the locator generation logic inside the ProductsPage class. After comparing the generated locator value with the actual data-test attribute on the page, i found that only the first space in the product name was being replaced with hyphen(-).
+# for example: 
+add-to-cart-sauce-labs-backpackak , Generated: add-to-cart-sauce-labs backpack. Because of this mismatch, Playwright could not find the element and eventually timed out.
 
-# Fix Applied: Added the missing await statements before fill() and click() actions and executed the tests again.
+# Tool Used: 
+1) Playwright HTML Report    
+2) Playwright error logs
 
-# Learning: This issue helped me understand the importance of "async/await" in playwright. even a small missing "await" can cause unexpected test failures and incorrect application behavior. i also learned how useful the Playwright HTML report is for debugging failed test cases
+# Fix Applied: 
+Updated the locator generation logic to replace all spaces in the product name before creating the dynamic locator.
+
+# Learning: 
+When creating dynamic locators, string manipulation should be validated carefully. Even a small formatting issue can cause multiple automated tests to fail. i also learned the importance of reviewing generated locator values while debugging Page Object Model implementations
