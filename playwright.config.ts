@@ -1,4 +1,7 @@
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices, expect } from '@playwright/test';
+import { TIMEOUTS, BASE_URL } from './utils/constant';
+
+
 
 /**
  * Read environment variables from file.
@@ -21,15 +24,29 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   /* Opt out of parallel tests on CI. */
   workers: process.env.CI ? 1 : undefined,
+
+  timeout: TIMEOUTS.TEST_TIMEOUT,
+expect: {
+  timeout: TIMEOUTS.EXPECT_TIMEOUT,
+},
+
   /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-  reporter: 'html',
+  reporter: [
+    ['list'], ['html', { outputFolder: 'playwright-report', open: 'never'}],
+    ['allure-playwright', { outputFolder: 'allure-results'}],
+  ],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
     // baseURL: 'http://localhost:3000',
+    baseURL: BASE_URL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+    screenshot: 'only-on-failure',
+    video: 'retain-on-failure',
+    actionTimeout: TIMEOUTS.ACTION_TIMEOUT,
+    navigationTimeout: TIMEOUTS.NAVIGATION_TIMEOUT,
   },
 
   /* Configure projects for major browsers */

@@ -12,6 +12,10 @@ test.beforeEach(async ({ page }) => {
 
 test('TC_001 Login page should load @smoke' ,     // verify login page elements are visible
     async ({page}) => {
+        test.info().annotations.push({
+            type: 'feature',
+            description: 'Login Functionality'
+        });
         const loginPage = new LoginPage(page);
         await loginPage.verifyLoginPageIsVisible();
 
@@ -22,6 +26,21 @@ test('TC_001 Login page should load @smoke' ,     // verify login page elements 
         await
         expect(page.locator('[data-test="login-button"]')).toBeVisible();*/
     });
+
+   /* test.only('TC_002 Valid user should login @smoke' ,   example of test.only
+    async ({page}) => {
+       await
+        page.locator('[data-test="username"]').fill(users[0].username);
+        await
+        page.locator('[data-test="password"]').fill(users[0].password);
+        await
+        page.locator('[data-test="login-button"]').click();
+        await expect(page).toHaveURL(/inventory/); 
+        const loginPage = new LoginPage(page);
+        await loginPage.login(users[0].username, users[0].password);
+        await expect(page).toHaveURL(/inventory/);
+    });*/
+
 
 test('TC_002 Valid user should login @smoke' ,   // verify valid user can login successfully
     async ({page}) => {
@@ -66,4 +85,12 @@ test('TC_004 Locked user should not login @negative' , // verify locked out user
         await loginPage.login(users[1].username, users[1].password);
         await loginPage.verifyErrorMessage('Epic sadface: Sorry, this user has been locked out.');
     });
+
+
+    test.skip(
+        'TC_017 Example of Skipped test',
+        async ({page}) => {
+            console.log('Skipped');
+        }
+    )
 
